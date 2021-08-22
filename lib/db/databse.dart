@@ -37,7 +37,7 @@ CREATE TABLE $tableBook (
   ${BookFields.address} $textType,
  
 
-  ${BookFields.time} $textType
+  ${BookFields.createdTime} $textType
   )
 ''');
   }
@@ -70,7 +70,7 @@ CREATE TABLE $tableBook (
   Future<List<Book>> readAllBooks() async {
     final db = await instance.database;
 
-    final orderBy = '${BookFields.time} ASC';
+    final orderBy = '${BookFields.createdTime} ASC';
     // final result =
     //     await db.rawQuery('SELECT * FROM $tableNotes ORDER BY $orderBy');
 

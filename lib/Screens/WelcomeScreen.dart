@@ -68,7 +68,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
           actions: [
             CircleAvatar(
-            backgroundColor:   kMaroon,
+            backgroundColor:   kLightBlue,
           radius: 14,
           child: Center(
             child: ClipOval(
@@ -76,7 +76,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child:
 
               IconButton(
-                icon: Icon(Icons.close, ), padding: EdgeInsets.all(0),
+                icon: Icon(Icons.close, color: Colors.white,), padding: EdgeInsets.all(0),
                 onPressed: () {
                   SystemNavigator.pop();
                 },
@@ -124,7 +124,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       SizedBox(height: 5, width: 5,),
                       Text(
                         'Add New Entry',
-                        style: TextStyle(color: kLightBlue, fontSize: 12),
+                        style: TextStyle(color: kLightBlue, fontSize: 14, fontFamily: 'LibreBaskerville-Regular') ,
                       ),
                     ],
                   ),
@@ -142,7 +142,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-          SizedBox(height: 30, width: 30,),
+          SizedBox(height: 10, width: 10,),
 
         Flexible(
           child: Carousel(),
@@ -164,27 +164,6 @@ Expanded(child:
       ]),
       ),
     ));
-    // Widget buildBook() => ListView.builder(itemBuilder: itemBuilder
-    //   padding: EdgeInsets.all(8),
-    //   itemCount: notes.length,
-    //   staggeredTileBuilder: (index) => StaggeredTile.fit(2),
-    //   crossAxisCount: 4,
-    //   mainAxisSpacing: 4,
-    //   crossAxisSpacing: 4,
-    //   itemBuilder: (context, index) {
-    //     final note = notes[index];
-    //
-    //     return
-    //
-    //         refreshNotes();
-    //       },
-    //       child: NoteCardWidget(note: note, index: index),
-    //     );
-    //
-    // );
-  // }
-  //
-  //
-  //
+
 }}
 

@@ -19,10 +19,12 @@ const kMessageContainerDecoration = BoxDecoration(
 );
 
 const kTextField= InputDecoration(
+
   fillColor: Colors.grey,
-  focusColor: Colors.pink,
+  // focusColor: Colors.grey,
+  filled: true,
   hintText: 'Enter your name',
-  hintStyle: TextStyle(color: Colors.grey),
+  //hintStyle: TextStyle(color: Colors.grey),
   contentPadding:
   EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
 
@@ -44,7 +46,7 @@ const kTextField= InputDecoration(
   ),
 );
 
-const kTextFieldReg = TextStyle(fontSize: 15, fontWeight:FontWeight.w500, color: Color(0xffEFEFEF), fontFamily: 'Yantramanav-Regular');
+const kTextFieldReg = TextStyle(fontSize: 14, fontWeight:FontWeight.w500, color: Color(0xffa8d1df), fontFamily: 'LibreBaskerville-Regular');
 
 const kFontStyle =  TextStyle(color: Color(0xffEFEFEF), fontSize: 25.0,
   fontWeight: FontWeight.w900,);
@@ -56,3 +58,5 @@ const kLightBlue = Color(0xffa8d1df);
 const kMaroon = Color(0xff660B21);
 
 const kDarkBlue = Color(0xff0A1931);
+
+const kCardBlue = Color(0xff71102D);

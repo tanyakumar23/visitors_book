@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:visitors_book/Styles/constants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-// import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:visitors_book/Screens/CheckScreen.dart';
 import 'dart:ui' as ui;
@@ -24,10 +23,6 @@ import 'dart:math';
 
 
 class RegistrationScreen extends StatefulWidget {
-  // final AlertDialog alert;
-  // // final String file;
-  // RegistrationScreen({  this.alert});
-
 
 
   @override
@@ -43,9 +38,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   File? _imageFile ;
   File? imgCropped ;
- // File savedImage = '';
+
   File? sigImgFile ;
-  // DateTime? createTime;
 File? selfpicImgFile;
 
 
@@ -71,8 +65,6 @@ File? selfpicImgFile;
         aspectRatio: CropAspectRatio(
             ratioX: 1, ratioY: 1
         ), compressQuality: 100,
-        // maxHeight: 700,
-        // maxWidth: 700,
         compressFormat: ImageCompressFormat.jpg,
       );
 
@@ -82,7 +74,6 @@ File? selfpicImgFile;
       });
     }
     Directory appDocDir = await getApplicationDocumentsDirectory();
-    // String appDocPath = appDocDir.path;
 
 
     final fileName = basename(_imageFile!.path);
@@ -90,9 +81,8 @@ File? selfpicImgFile;
    //savedImage = saveImage.toString();
  //  createTime = DateTime.now();
   }
-// int counter = 0;
   Future<void> saveSignatureImage() async {
-    // counter ++;
+
     Random random = new Random();
     int randomNumber = random.nextInt(100);
     RenderSignaturePad boundary = _signaturePadKey.currentContext!.findRenderObject() as RenderSignaturePad;
@@ -124,16 +114,15 @@ File? selfpicImgFile;
     return Container(
         decoration: BoxDecoration(
         image: DecorationImage(
-        image: AssetImage('images/bckgrd2.jpg'),
+        image: AssetImage('assets/bee.jpeg'),
     fit: BoxFit.cover,
     colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.darken)
     )
     ),
     child: Scaffold(
         backgroundColor: Colors.transparent,        appBar: AppBar(
-          backgroundColor: Color(0xff660B21),
-          // backgroundColor: Color(0xff840A70),
-          title: Text("New Entry",),
+          backgroundColor: kMaroon,
+          title: Text("New Entry",style: TextStyle(fontFamily: 'LibreBaskerville-Regular'),),
         ),
         body: SingleChildScrollView(
           //scrollDirection: Axis.vertical,
@@ -196,7 +185,7 @@ File? selfpicImgFile;
                           Text("Add Your Comments", style: kTextFieldReg,),
                           SizedBox(height: 10, width: 10,),
                           TextFormField(
-                            style: TextStyle(color: Colors.white),maxLength: 5,
+                            style: TextStyle(color: Colors.white),maxLength: 85,
                             //maxLengthEnforced: true
 
                             decoration: kTextField.copyWith(
@@ -240,16 +229,10 @@ File? selfpicImgFile;
                         Text('clear image', style: kTextFieldReg,),
                         SizedBox(height:4, width: 4 ),
                         IconButton(
-    onPressed: () async {
+                            onPressed: () async {
                           _signaturePadKey.currentState!.clear();
-                      },
-
-
-
-    // Navigator.push(context, MaterialPageRoute(
-    //     builder: (context) => signaturePage()));
-              icon: CircleAvatar(
-                  backgroundColor: Color(0xff660B21),
+                      }, icon: CircleAvatar(
+                  backgroundColor: kLightBlue,
                   radius: 19,
                   child: ClipOval(
 
@@ -263,48 +246,20 @@ File? selfpicImgFile;
        saveSignatureImage();
      },
     icon: CircleAvatar(
-    backgroundColor: Color(0xff660B21),
+    backgroundColor: kLightBlue,
     radius: 19,
     child: ClipOval(
 
     child:Icon((Icons.check), color: Colors.white, ))
     ))
-                          // Navigator.push(context, MaterialPageRoute(
-                          //     builder: (context) => signaturePage()));
-                        // }, icon: CircleAvatar(
-                        //     backgroundColor: Color(0xff660B21),
-                        //     radius: 19,
-                        //     child: ClipOval(
-                        //
-                        //         child:Icon((Icons.close), color: Colors.white, ))
-                        // )),
-                        // Text('save image', style: kTextFieldReg,),
-                        // SizedBox(height:4, width: 4 ),
-                        // IconButton(onPressed: ()
-                        //
-                        // async {
 
-
-
-                          // Navigator.push(context, MaterialPageRoute(
-                          //     builder: (context) => signaturePage()));
-                        // }, icon: CircleAvatar(
-                        //     backgroundColor: Color(0xff660B21),
-                        //     radius: 19,
-                        //     child: ClipOval(
-                        //
-                        //         child:Icon((Icons.check), color: Colors.white, ))
-                        // )) ]
-
-
-                 // ),
           ])
                   ,
                   SizedBox(width: 20, height: 20,),
                   ElevatedButton(
                       child: Text(
                         'Add',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white,fontFamily: 'LibreBaskerville-Regular',fontSize: 18),
                       ),
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(150, 60), primary: Color(0xff660B21),),
@@ -362,14 +317,13 @@ File? selfpicImgFile;
 
               radius: 70.0,
 
-              backgroundColor: Color(0xff660B21),
+              backgroundColor:kMaroon,
               child: ClipOval(
                 child: SizedBox(
                     width: 300,
                     height:300,
                     child: (selfpicImgFile!=null)?Image.file(selfpicImgFile!, fit: BoxFit.fill,):
     Image.network("https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png",fit: BoxFit.fill,),
-    //ccount-avatar-profile-human-man-user-30448.png",fit: BoxFit.fill,)
 
 
                 ),
@@ -380,10 +334,17 @@ File? selfpicImgFile;
             top: 112,
             left: 90,
 
-            child:  IconButton(
-                padding: EdgeInsets.all(2),
+            child: CircleAvatar(
+
+    radius: 20.0,
+
+    backgroundColor: kLightBlue,
+    child: ClipOval(
+    child: IconButton(
+                padding: EdgeInsets.fromLTRB(0,0,7,7),
                 alignment: Alignment.bottomRight,
                 icon: Icon( Icons.camera_alt,),
+
                 color: Colors.white,
                 onPressed:() {
                   pickImage();
@@ -391,7 +352,8 @@ File? selfpicImgFile;
                 }),
           ),
 
-        ]);
+    ))]
+    );
 
 
 

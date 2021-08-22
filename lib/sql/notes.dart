@@ -4,7 +4,7 @@ final String tableBook = 'books';
 
 class BookFields {
   static final List<String> values = [
-    id, name, address, comments,  time
+    id, name, address, comments,  createdTime
   ];
 
   static final String id = '_id';
@@ -15,7 +15,7 @@ class BookFields {
   static final String selfpicURL = 'selfpicURL';
  static final String sigURL = 'sigURL';
 
-  static final String time = 'time';
+  static final String createdTime = 'time';
 }
 
 class Book {
@@ -25,7 +25,7 @@ class Book {
   final String address;
  final String selfpicURL;
  final String sigURL;
-  final DateTime createdTime;
+  final String createdTime;
 
   const Book({
     this.id,
@@ -44,7 +44,7 @@ class Book {
     String? address,
    String? selfpicURL,
     String? sigURL,
-    DateTime? createdTime,
+    String? createdTime,
   }) =>
       Book(
         id: id ?? this.id,
@@ -64,7 +64,7 @@ class Book {
    selfpicURL: json[BookFields.selfpicURL] as String,
     sigURL: json[BookFields.sigURL] as String,
 
-    createdTime: DateTime.parse(json[BookFields.time] as String),
+    createdTime: json[BookFields.createdTime] as String,
   );
 
   Map<String, Object?> toJson() => {
@@ -75,6 +75,6 @@ class Book {
     BookFields.selfpicURL: selfpicURL,
     BookFields.sigURL: sigURL,
 
-    BookFields.time: createdTime.toIso8601String(),
+    BookFields.createdTime: createdTime,
   };
 }

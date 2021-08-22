@@ -64,13 +64,13 @@ flutter:
 
 
   fonts:
-    - family: Yantramanav-Regular
+    - family: Allison-Regular
       fonts:
-       - asset: fonts/Yantramanav-Regular.ttf
+       - asset: fonts/Allison-Regular.ttf
         # weight: 900
-    - family: EncodeSansSC
+    - family: GreatVibes-Regular
       fonts:
-       - asset: fonts/EncodeSansSC-VariableFont_wdth,wght.ttf
+       - asset: fonts/GreatVibes-Regular.ttf
     - family: Montserrat-Medium
       fonts:
        - asset: fonts/Montserrat-Medium.ttf
