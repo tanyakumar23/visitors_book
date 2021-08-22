@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "736680630522",
+    "project_id": "visitor-book-32fba",
+    "storage_bucket": "visitor-book-32fba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736680630522:android:e6f207390ffa227de1d143",
+        "android_client_info": {
+          "package_name": "co.TanyaKumar.navigation_demo_starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736680630522-rqgf55unt4tmt1cqetfo9qbf6qnr1l2k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVGG72cZpKo2hb9wyXNf3ai9hVIr8YRK0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "736680630522-rqgf55unt4tmt1cqetfo9qbf6qnr1l2k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
