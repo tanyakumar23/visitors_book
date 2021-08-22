@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:visitors_book/Styles/constants.dart';
 import 'package:visitors_book/Screens/RegistrationScreen.dart';
-import 'package:visitors_book/widgets.dart';
+import 'package:visitors_book/Widgets/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:visitors_book/db/databse.dart';
 import 'package:visitors_book/sql/notes.dart';
 import 'dart:async';
+import 'package:visitors_book/Widgets/ReuseableCard.dart';
 
 
 

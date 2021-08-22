@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:visitors_book/db/databse.dart';
 import 'package:visitors_book/sql/notes.dart';
-
+import 'package:flutter/material.dart';
+import 'package:visitors_book/Styles/constants.dart';
 class ReuseableCard extends StatelessWidget {
   const ReuseableCard({
     Key? key,
