@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:visitors_book/Styles/constants.dart';
 import 'dart:io';
-import 'RegistrationScreen.dart';
 import 'package:intl/intl.dart';
 import 'package:visitors_book/Screens/RegistrationScreen.dart';
 import 'package:visitors_book/db/databse.dart';
 import 'package:visitors_book/sql/notes.dart';
+import 'package:visitors_book/db/databaseHelper.dart';
 
 
 
@@ -19,6 +19,7 @@ class CheckScreen extends StatefulWidget {
   // DateTime? createTime;
 
 
+
   CheckScreen({ @required this.selfpicImgFile, @required this.name, @required this.comments, @required this.address,  this.sigImgFile, }) ;
 
   @override
@@ -29,22 +30,38 @@ class CheckScreen extends StatefulWidget {
 
 class _CheckScreenState extends State<CheckScreen> {
   @override
+  final dbHelper = DatabaseHelper.instance;
 
-  DateTime createdTime = DateTime.now();
+  void _insert() async {
+    // row to insert
+    Map<String, dynamic> row = {
+      DatabaseHelper.columnName : widget.name,
+      // DatabaseHelper.address  :  widget.address,
+      //
+      //
+      // DatabaseHelper.comments  : widget.comments,
+      //
+      // DatabaseHelper.sigURL : widget.sigImgFile.toString(),
+      // DatabaseHelper.columnAge : 2,
 
-
-  Future addNew() async {
-
-    final book = Book(
-      name: widget.name!,
-      address: widget.address!,
-      comments: widget.comments!,
-    selfpicURL: widget.selfpicImgFile.toString(),
-     sigURL: widget.sigImgFile.toString(),
-      createdTime: createdTime.toString(),
-    );
-    await BookDatabase.instance.create(book);
+    };
+    final id = await dbHelper.insert(row);
+    print('inserted row id: $id');
   }
+
+
+  // Future addNew() async {
+  //
+  //   final book = Book(
+  //     name: widget.name!,
+  //     address: widget.address!,
+  //     comments: widget.comments!,
+  //   selfpicURL: widget.selfpicImgFile.toString(),
+  //    sigURL: widget.sigImgFile.toString(),
+  //     createdTime: createdTime.toString(),
+  //   );
+  //   await BookDatabase.instance.create(book);
+  // }
 
 
   Widget build(BuildContext context) {
@@ -63,7 +80,8 @@ class _CheckScreenState extends State<CheckScreen> {
         backgroundColor: kMaroon,
         title: Text("Go back", style: TextStyle(fontFamily : 'LibreBaskerville-Regular')),
       ),
-            body: SafeArea(
+            body: SingleChildScrollView(
+    child: SafeArea(
               child:
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0,0,0,2),
@@ -77,7 +95,7 @@ class _CheckScreenState extends State<CheckScreen> {
                         Container(
                           margin: EdgeInsets.fromLTRB(20, 90, 20, 90),
                           //height: 2,
-                          padding: EdgeInsets.fromLTRB(10, 30, 20, 30),
+                          padding: EdgeInsets.fromLTRB(0, 30, 20, 20),
 
                           decoration: BoxDecoration(
                             color: kCardBlue.withOpacity(0.6),
@@ -90,13 +108,14 @@ class _CheckScreenState extends State<CheckScreen> {
                           child: Row(
 
                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
 
 
                             children: [
 
                                  Padding(
 
-                                   padding: EdgeInsets.fromLTRB(20,10,1,10),
+                                   padding: EdgeInsets.fromLTRB(20,1,1,10),
                                    child: ClipRRect(
                                      borderRadius: BorderRadius.circular(15.0),
                                      child: Container(
@@ -105,7 +124,7 @@ class _CheckScreenState extends State<CheckScreen> {
                                          child: (widget.selfpicImgFile != null) ? Image.file(
                                            widget.selfpicImgFile!,  fit: BoxFit.cover,
                                            width: 150,
-                                           height: 200,) :
+                                           height: 250,) :
                                          Image.network(
                                            "https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png",
                                            //fit: BoxFit.fill,
@@ -121,7 +140,7 @@ class _CheckScreenState extends State<CheckScreen> {
                                    ),
                                  ),
 
-                              SizedBox(height: 10.0, width: 10.0,),
+                              SizedBox(height: 14.0, width: 14.0,),
 
                                  Expanded(
                                      child: Column(
@@ -130,8 +149,8 @@ class _CheckScreenState extends State<CheckScreen> {
                                       children: [
                                         Text(widget.comments!, style: kFontStyle
                                             .copyWith(color: kLightBlue,
-                                          fontSize: 20,
-                                          fontFamily: 'Allison-Regular',),
+                                          fontSize: 35,
+                                          fontFamily: 'GreatVibes-Regular',),
                                           //textAlign: TextAlign.center,),
                                         ),
 
@@ -142,17 +161,17 @@ class _CheckScreenState extends State<CheckScreen> {
                               Text(widget.name! + ", " +  widget.address!,
                                       style: kFontStyle.copyWith(
                                           color: kLightBlue,
-                                          fontSize: 20,
+                                          fontSize: 35,
                                           fontFamily: 'Allison-Regular'),
                                       textAlign: TextAlign.center),
 
                               SizedBox(height: 5.0, width: 5.0,),
                               Text(
                                   DateFormat("yyyy-MM-dd").format(DateTime.now()), style: kFontStyle.copyWith(
-                                      fontSize: 20, color: kLightBlue),
+                                      fontSize: 20, color: kLightBlue,fontFamily: 'Allison-Regular'),
                                 textAlign: TextAlign.right,),
 
-                              SizedBox(height: 50.0, width: 50.0,),
+                              SizedBox(height: 30.0, width: 30.0,),
                               Padding(
 
                                 padding: EdgeInsets.all(6),
@@ -198,13 +217,15 @@ class _CheckScreenState extends State<CheckScreen> {
                             'Post',
                             style: TextStyle(color: Colors.white, fontFamily: 'LibreBaskerville-Regular',fontSize: 18),
                           ), onPressed: (){
-                          addNew();
+                          _insert();
                         },
                         ),
+                        SizedBox(height:40.0, width: 40.0,),
+
                       ],
                     ),
                   )
     ),
-          ));
+          )));
   }
 }

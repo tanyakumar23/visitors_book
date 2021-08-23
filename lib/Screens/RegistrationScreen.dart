@@ -49,8 +49,9 @@ File? selfpicImgFile;
 
 
 
-  AlertDialog alert = AlertDialog(
-    title: Text("Please enter image", textAlign: TextAlign.center,),
+  AlertDialog? alert ;
+  AlertDialog alert2 = AlertDialog(
+    title: Text("Please save signature", textAlign: TextAlign.center,),
 
     actions: [
     ],
@@ -185,7 +186,7 @@ File? selfpicImgFile;
                           Text("Add Your Comments", style: kTextFieldReg,),
                           SizedBox(height: 10, width: 10,),
                           TextFormField(
-                            style: TextStyle(color: Colors.white),maxLength: 85,
+                            style: TextStyle(color: Colors.white),maxLength: 155,
                             //maxLengthEnforced: true
 
                             decoration: kTextField.copyWith(
@@ -281,12 +282,41 @@ File? selfpicImgFile;
                                         sigImgFile: sigImgFile,
                                        )));
                           }
-                          else {
+                          else if(_imageFile == null){
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return alert;
-                              },
+                                return  AlertDialog(
+                                title: Text("Please enter image", textAlign: TextAlign.center,),
+
+                                actions: [
+                                TextButton(
+                                child: Text("OK"),
+                                onPressed: () {
+                                Navigator.pop(context);
+                                },
+                                ),
+                                ],
+                                );
+                              });
+                                }
+    else if(sigImgFile == null){
+    showDialog(
+    context: context,
+    builder: (BuildContext context) {
+    return  AlertDialog(
+    title: Text("Please save signature", textAlign: TextAlign.center,),
+
+    actions: [
+    TextButton(
+    child: Text("OK"),
+    onPressed: () {
+    Navigator.pop(context);
+    },
+    ),
+    ],
+    );
+    },
                             );
                           }
 
@@ -294,7 +324,7 @@ File? selfpicImgFile;
                         }
 
 
-                        ;})]
+                        })]
 
 
 
@@ -304,6 +334,7 @@ File? selfpicImgFile;
         )
     ));
   }
+
 
   Widget ImageProfile(){
     return Stack(
@@ -317,57 +348,49 @@ File? selfpicImgFile;
 
               radius: 70.0,
 
-              backgroundColor:kMaroon,
+              backgroundColor: Color(0xff660B21),
               child: ClipOval(
                 child: SizedBox(
                     width: 300,
                     height:300,
-                    child: (selfpicImgFile!=null)?Image.file(selfpicImgFile!, fit: BoxFit.fill,):
-    Image.network("https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png",fit: BoxFit.fill,),
+                    child: (_imageFile!=null)?Image.file(_imageFile!, fit: BoxFit.fill,):
+                    Image.network("https://cdn.iconscout.com/icon/free/png-256/account-avatar-profile-human-man-user-30448.png",fit: BoxFit.fill,)
 
 
                 ),
               ),
             ),
           ),
+
+//SizedBox(height: 10, width: 10,),
+          // Padding(
+          //  padding:  EdgeInsets.all(10.0),
+
           Positioned(
             top: 112,
             left: 90,
-
-            child: CircleAvatar(
+    child: CircleAvatar(
 
     radius: 20.0,
 
     backgroundColor: kLightBlue,
-    child: ClipOval(
-    child: IconButton(
-                padding: EdgeInsets.fromLTRB(0,0,7,7),
+    child:ClipOval(
+            child:  IconButton(
+                padding:  EdgeInsets.fromLTRB(0,0,7,7),
                 alignment: Alignment.bottomRight,
                 icon: Icon( Icons.camera_alt,),
-
                 color: Colors.white,
                 onPressed:() {
                   pickImage();
 
                 }),
           ),
+          // ),
 
-    ))]
-    );
-
-
+    ))])
 
 
-
-
-
-
-
-
-
-
-  }
-
+    ;}
 
 
 }

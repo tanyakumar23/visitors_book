@@ -59,4 +59,4 @@ const kMaroon = Color(0xff660B21);
 
 const kDarkBlue = Color(0xff0A1931);
 
-const kCardBlue = Color(0xff71102D);
+const kCardBlue = Color(0xffC7E6F2);

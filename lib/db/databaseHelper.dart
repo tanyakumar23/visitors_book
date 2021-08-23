@@ -1,67 +1,97 @@
-// import 'dart:async';
-// import 'dart:typed_data';
-//
-// import 'package:path/path.dart';
-// import 'package:sqflite/sqflite.dart';
-// import 'package:flutter/widgets.dart';
-//
-// class Book {
-//   final int id;
-//   final String name;
-//   final String address ;
-//   final String comments ;
-//
-//   final Uint8List selfpicURL ;
-//
-//   final Uint8List sigURL ;
-//   final String time ;
-//
-//   Book({
-//     required this.id,
-//     required this.name,
-//     required this.address,
-//     required this.comments,
-//     required this.selfpicURL,
-//     required this.sigURL,
-//     required this.time,
-//
-//   });
-//
-//
-// // Avoid errors caused by flutter upgrade.
-// // Importing 'package:flutter/widgets.dart' is required.
-//   final database = openDatabase (
-//     // Set the path to the database. Note: Using the `join` function from the
-//     // `path` package is best practice to ensure the path is correctly
-//     // constructed for each platform.
-//       final path = join(await getDatabasesPath(), 'doggie_database.db'),
-//   // When the database is first created, create a table to store dogs.
-//       onCreate: (db, version) {
-//   // Run the CREATE TABLE statement on the database.
-//   return db.execute(
-//   'CREATE TABLE dogs(id INTEGER PRIMARY KEY, name TEXT, age INTEGER)',
-//   );
-//   },
-//   // Set the version. This executes the onCreate function and provides a
-//   // path to perform database upgrades and downgrades.
-//   version: 1,
-//   );
-// }
-//
-// // A method that retrieves all the dogs from the dogs table.
-// Future<List<Book>> books() async {
-//   // Get a reference to the database.
-//   final db = await database;
-//
-//   // Query the table for all The Dogs.
-//   final List<Map<String, dynamic>> maps = await db.query('books');
-//
-//   // Convert the List<Map<String, dynamic> into a List<Dog>.
-//   return List.generate(maps.length, (i) {
-//     return Book(
-//       id: maps[i]['id'],
-//       name: maps[i]['name'],
-//      // age: maps[i]['age'],
-//     );
-//   });
-//}
+import 'dart:io';
+
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
+
+
+
+class DatabaseHelper {
+
+  static final _databaseName = "MyDatabase.db";
+  static final _databaseVersion = 1;
+
+  static final table = 'my_table';
+
+  static final columnId = '_id';
+  static final columnName = 'name';
+  static final address = 'address';
+
+  static final comments = 'comments';
+  static final sigURL = 'sigURL';
+
+  static final columnAge = 'age';
+
+  // make this a singleton class
+  DatabaseHelper._privateConstructor();
+  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+
+  // only have a single app-wide reference to the database
+  static Database? _database;
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    // lazily instantiate the db the first time it is accessed
+    _database = await _initDatabase();
+    return _database!;
+  }
+
+  // this opens the database (and creates it if it doesn't exist)
+  _initDatabase() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, _databaseName);
+    return await openDatabase(path,
+        version: _databaseVersion,
+        onCreate: _onCreate);
+  }
+
+  // SQL code to create the database table
+  Future _onCreate(Database db, int version) async {
+    await db.execute('''
+          CREATE TABLE $table (
+            $columnId INTEGER PRIMARY KEY,
+             $columnName TEXT NOT NULL,
+         
+            
+          )
+          ''');
+  }
+
+  // Helper methods
+
+  // Inserts a row in the database where each key in the Map is a column name
+  // and the value is the column value. The return value is the id of the
+  // inserted row.
+  Future<int> insert(Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    return await db.insert(table, row);
+  }
+
+  //The data present in the table is returned as a List of Map, where each
+  // row is of type map
+  Future<List<Map<String, dynamic>>> queryAllRows() async {
+    Database db = await instance.database;
+    return await db.query(table);
+  }
+
+  // All of the methods (insert, query, update, delete) can also be done using
+  // raw SQL commands. This method uses a raw query to give the row count.
+  Future queryRowCount() async {
+    Database db = await instance.database;
+    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table'));
+  }
+
+  // We are assuming here that the id column in the map is set. The other
+  // column values will be used to update the row.
+  Future<int> update(Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    int id = row[columnId];
+    return await db.update(table, row, where: '$columnId = ?', whereArgs: [id]);
+  }
+
+  // Deletes the row specified by the id. The number of affected rows is
+  // returned. This should be 1 as long as the row exists.
+  Future<int> delete(int id) async {
+    Database db = await instance.database;
+    return await db.delete(table, where: '$columnId = ?', whereArgs: [id]);
+  }
+}

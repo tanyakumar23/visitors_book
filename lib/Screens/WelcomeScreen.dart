@@ -10,6 +10,7 @@ import 'package:visitors_book/db/databse.dart';
 import 'package:visitors_book/sql/notes.dart';
 import 'dart:async';
 import 'package:visitors_book/Widgets/ReuseableCard.dart';
+import 'package:visitors_book/db/databaseHelper.dart';
 
 
 
@@ -20,23 +21,29 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  late List<Book> books ;
-  bool isLoading = false;
-  late Book book;
+  // late List<Book> books ;
+  final dbHelper = DatabaseHelper.instance;
+
+  // bool isLoading = false;
+  // late Book book;
   @override
   void initState(){
     super.initState();
-    refresh();
+    //refresh();
   }
-
-  Future refresh() async {
-    setState(() => isLoading = true);
-
-   this.books = await BookDatabase.instance.readAllBooks();
-
-    setState(() => isLoading = false,
-    );
+  void _query() async {
+    final allRows = await dbHelper.queryAllRows();
+    print('query all rows:');
+    allRows.forEach((row) => print(row));
   }
+  // Future refresh() async {
+  //   setState(() => isLoading = true);
+  //
+  //  this.books = await BookDatabase.instance.readAllBooks();
+  //
+  //   setState(() => isLoading = false,
+  //   );
+  // }
 
   Widget build(BuildContext context) {
     return Container(
@@ -150,14 +157,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
 
       SizedBox(height: 20.0, width: 20.0,),
-          isLoading
-              ? CircularProgressIndicator()
-              : books.isEmpty
-              ? Text(
-              'No Notes',)
-:
+          //isLoading
+//               ? CircularProgressIndicator()
+//               : books.isEmpty
+//               ? Text(
+//               'No Notes',)
+// :
 Expanded(child:
-      ReuseableCard(books: books),
+    Container(child: RaisedButton(
+      color:Colors.transparent
+      ,child: Text('query', style: TextStyle(fontSize: 20),),
+      onPressed: () {_query();},
+    ),)
+      //ReuseableCard(books: books),
 
 
       )
