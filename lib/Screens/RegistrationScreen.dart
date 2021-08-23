@@ -74,6 +74,7 @@ File? selfpicImgFile;
         _imageFile = imgCropped;
       });
     }
+
     Directory appDocDir = await getApplicationDocumentsDirectory();
 
 
@@ -88,6 +89,7 @@ File? selfpicImgFile;
     int randomNumber = random.nextInt(100);
     RenderSignaturePad boundary = _signaturePadKey.currentContext!.findRenderObject() as RenderSignaturePad;
     ui.Image image = await boundary.toImage();
+    //final bytes = Io.File(image).readAsBytesSync();
     final directory = (await getApplicationDocumentsDirectory()).path;
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData!.buffer.asUint8List();
@@ -217,8 +219,8 @@ File? selfpicImgFile;
                       key: _signaturePadKey,
                       minimumStrokeWidth: 1,
                       maximumStrokeWidth: 3,
-                      strokeColor: Colors.black,
-                      backgroundColor: kLightBlue,
+                      strokeColor: Colors.white,
+                      backgroundColor: kCardBlue,
                     ),
                     height: 200,
                     width: 300,

@@ -20,7 +20,7 @@ const kMessageContainerDecoration = BoxDecoration(
 
 const kTextField= InputDecoration(
 
-  fillColor: Colors.grey,
+  fillColor: Color(0xff0f2442),
   // focusColor: Colors.grey,
   filled: true,
   hintText: 'Enter your name',
@@ -59,4 +59,4 @@ const kMaroon = Color(0xff660B21);
 
 const kDarkBlue = Color(0xff0A1931);
 
-const kCardBlue = Color(0xffC7E6F2);
+const kCardBlue = Color(0xff0f2442);

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:visitors_book/Screens/WelcomeScreen.dart';
 import 'package:visitors_book/Styles/constants.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:visitors_book/Screens/RegistrationScreen.dart';
 import 'package:visitors_book/db/databse.dart';
 import 'package:visitors_book/db/notes.dart';
-import 'package:visitors_book/db/databaseHelper.dart';
 
 
 
@@ -31,18 +31,28 @@ class CheckScreen extends StatefulWidget {
 class _CheckScreenState extends State<CheckScreen> {
   @override
   final dbHelper = DatabaseHelper.instance;
+  String createdTime = DateFormat("yyyy-MM-dd").format(DateTime.now());
+
 
   void _insert() async {
     // row to insert
+    String selfImg = widget.sigImgFile.toString();
+        String sigImg = widget.sigImgFile.toString();
+
+
     Map<String, dynamic> row = {
       DatabaseHelper.columnName : widget.name,
-      // DatabaseHelper.address  :  widget.address,
-      //
-      //
-      // DatabaseHelper.comments  : widget.comments,
-      //
-      // DatabaseHelper.sigURL : widget.sigImgFile.toString(),
-      // DatabaseHelper.columnAge : 2,
+      DatabaseHelper.columnAddress  :  widget.address,
+
+
+      DatabaseHelper.comments  : widget.comments,
+      DatabaseHelper.sigURL : selfImg,
+      DatabaseHelper.selfpicURL : sigImg,
+
+
+      DatabaseHelper.columnAge : 2,
+      DatabaseHelper.createdTime : createdTime,
+
 
     };
     final id = await dbHelper.insert(row);
@@ -167,7 +177,7 @@ class _CheckScreenState extends State<CheckScreen> {
 
                               SizedBox(height: 5.0, width: 5.0,),
                               Text(
-                                  DateFormat("yyyy-MM-dd").format(DateTime.now()), style: kFontStyle.copyWith(
+                                  createdTime, style: kFontStyle.copyWith(
                                       fontSize: 20, color: kLightBlue,fontFamily: 'Allison-Regular'),
                                 textAlign: TextAlign.right,),
 
@@ -218,6 +228,8 @@ class _CheckScreenState extends State<CheckScreen> {
                             style: TextStyle(color: Colors.white, fontFamily: 'LibreBaskerville-Regular',fontSize: 18),
                           ), onPressed: (){
                           _insert();
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => WelcomeScreen()));
                         },
                         ),
                         SizedBox(height:40.0, width: 40.0,),

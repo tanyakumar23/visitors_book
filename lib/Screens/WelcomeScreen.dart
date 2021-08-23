@@ -9,8 +9,8 @@ import 'package:flutter/widgets.dart';
 import 'package:visitors_book/db/databse.dart';
 import 'package:visitors_book/db/notes.dart';
 import 'dart:async';
-import 'package:visitors_book/Widgets/ReuseableCard.dart';
-import 'package:visitors_book/db/databaseHelper.dart';
+import 'dart:io';
+
 
 
 
@@ -22,28 +22,33 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   // late List<Book> books ;
+    late List allRows ;
   final dbHelper = DatabaseHelper.instance;
+  final isLoading = false;
+  // final List allRow;
 
   // bool isLoading = false;
   // late Book book;
+
   @override
   void initState(){
     super.initState();
-    //refresh();
+
+    _query();
   }
-  void _query() async {
-    final allRows = await dbHelper.queryAllRows();
-    print('query all rows:');
-    allRows.forEach((row) => print(row));
+   Future  _query() async {
+
+      allRows = await dbHelper.queryAllRows();
+
+    print('query all rows: ');
+print(allRows[0]);
+print(allRows.length);
+
   }
-  // Future refresh() async {
-  //   setState(() => isLoading = true);
-  //
-  //  this.books = await BookDatabase.instance.readAllBooks();
-  //
-  //   setState(() => isLoading = false,
-  //   );
-  // }
+
+
+
+
 
   Widget build(BuildContext context) {
     return Container(
@@ -163,19 +168,180 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 //               ? Text(
 //               'No Notes',)
 // :
+
+
+          ////////////////////////////////////////////////////////////////////
 Expanded(child:
-    Container(child: RaisedButton(
-      color:Colors.transparent
-      ,child: Text('query', style: TextStyle(fontSize: 20),),
-      onPressed: () {_query();},
-    ),)
+
+ListView.builder(
+    padding: const EdgeInsets.all(8),
+    itemCount: allRows.length,
+    itemBuilder: (BuildContext context, int index) {
+      final row = allRows[index];
+
+      return Container(
+
+        child:Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                    5.0, 15.0, 5.0, 15.0),
+                child: Column(
+                  children: [
+                    Row(
+                        children: <Widget>[
+
+                          Expanded(
+                            child:  Padding(
+                              padding: const EdgeInsets.fromLTRB(0,0,0,2),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+                                // mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                   // margin: EdgeInsets.fromLTRB(20, 90, 20, 90),
+                                    //height: 2,
+                                    padding: EdgeInsets.fromLTRB(0, 30, 20, 20),
+
+                                    decoration: BoxDecoration(
+                                      color: kCardBlue.withOpacity(0.6),
+                                      borderRadius: BorderRadius.circular(20.0),
+
+
+                                    ),
+
+
+                                    child: Row(
+
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+
+
+                                        children: [
+
+                                          Padding(
+
+                                            padding: EdgeInsets.fromLTRB(20,1,1,10),
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(15.0),
+                                              child: Container(
+                                                child: Align(
+                                                  //alignment: Alignment.topLeft,
+                                                  child:
+    Image.file(File(row['selfpicURL'])),
+                                                    // width: 150,
+                                                    // height: 250,)
+                                                    //
+                                                    // fit: BoxFit.cover,
+                                                    // width: 200,
+                                                    // height: 150,
+                                                  ),
+                                                  // fit: BoxFit.cover,
+                                                  width: 20,
+                                                  height: 15,
+                                                ),
+                                              ),
+                                            ),
+
+
+                                          SizedBox(height: 14.0, width: 14.0,),
+
+                                          Expanded(
+                                            child: Column(
+
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Text(row['comments'], style: kFontStyle
+                                                    .copyWith(color: kLightBlue,
+                                                  fontSize: 35,
+                                                  fontFamily: 'GreatVibes-Regular',),
+                                                  //textAlign: TextAlign.center,),
+                                                ),
+
+                                                SizedBox(height: 7.0, width: 7.0,),
+                                                //Spacer(),
+
+
+                                                Text(row['name'] + ", " +  row['address'],
+                                                    style: kFontStyle.copyWith(
+                                                        color: kLightBlue,
+                                                        fontSize: 35,
+                                                        fontFamily: 'Allison-Regular'),
+                                                    textAlign: TextAlign.center),
+
+                                                SizedBox(height: 5.0, width: 5.0,),
+                                                Text(
+                                                  row['time'], style: kFontStyle.copyWith(
+                                                    fontSize: 20, color: kLightBlue,fontFamily: 'Allison-Regular'),
+                                                  textAlign: TextAlign.right,),
+
+                                                SizedBox(height: 30.0, width: 30.0,),
+                                                Padding(
+
+                                                  padding: EdgeInsets.all(6),
+                                                  child: Container(
+                                                    constraints: BoxConstraints(
+                                                        maxHeight: 70, maxWidth: 70
+                                                    ),
+                                                    child: Align(
+                                                      widthFactor: 0.25,
+                                                      heightFactor: 0.35,
+                                                      child:
+                                                      Image.file(File(row['selfpicURL'])),
+
+                                                        //fit: BoxFit.fill,
+                                                      ),
+
+                                                    ),
+                                                  ),
+
+
+
+
+
+                                              ],  ),
+                                          ),
+
+
+
+
+                                        ]),),
+
+
+
+    ],
+                              ),
+                            )
+                          ),
+
+
+                        ]
+                    ),
+                    SizedBox(height: 5, width: 5,),
+                    Divider(
+                      color: Color(0xffdbb112),
+                      thickness: 1,
+                    ),
+                    ],
+                ),
+              ),
+            ]),
+
+      );
+    }
+),),
+
+    ])
+    )
+    ));
+
       //ReuseableCard(books: books),
 
 
-      )
-      ]),
-      ),
-    ));
+
 
 }}
 

@@ -1,31 +1,36 @@
+
 import 'dart:io';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
-
-
 class DatabaseHelper {
 
   static final _databaseName = "MyDatabase.db";
   static final _databaseVersion = 1;
 
-  static final table = 'my_table';
+  static final table = 'wTable';
 
   static final columnId = '_id';
-  static final columnName = 'name';
-  static final address = 'address';
+  static final columnName = 'columnName';
+  static final columnAddress = 'columnAddress';
 
   static final comments = 'comments';
   static final sigURL = 'sigURL';
 
-  static final columnAge = 'age';
+  static final columnAge = 'columnAge';
+
+
+
+  static final createdTime = 'time';
 
   DatabaseHelper._privateConstructor();
+
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
 
   static Database? _database;
+
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDatabase();
@@ -40,12 +45,21 @@ class DatabaseHelper {
         onCreate: _onCreate);
   }
 
+
   Future _onCreate(Database db, int version) async {
     await db.execute('''
-          CREATE TABLE $table (
+          CREATE TABLE $table(
             $columnId INTEGER PRIMARY KEY,
-             $columnName TEXT NOT NULL,
-         
+            $columnName TEXT NOT NULL,
+                $columnAddress TEXT NOT NULL,
+                    $comments TEXT NOT NULL,
+                            $sigURL TEXT NOT NULL,
+                             $columnAge INT NOT NULL,
+                            
+
+                             $createdTime TEXT NOT NULL
+
+  
             
           )
           ''');
@@ -57,16 +71,15 @@ class DatabaseHelper {
     return await db.insert(table, row);
   }
 
-
   Future<List<Map<String, dynamic>>> queryAllRows() async {
     Database db = await instance.database;
     return await db.query(table);
   }
 
-
   Future queryRowCount() async {
     Database db = await instance.database;
-    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table'));
+    return Sqflite.firstIntValue(
+        await db.rawQuery('SELECT COUNT(*) FROM $table'));
   }
 
 
@@ -75,6 +88,7 @@ class DatabaseHelper {
     int id = row[columnId];
     return await db.update(table, row, where: '$columnId = ?', whereArgs: [id]);
   }
+
 
   Future<int> delete(int id) async {
     Database db = await instance.database;
