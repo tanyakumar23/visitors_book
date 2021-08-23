@@ -1,23 +1,23 @@
 import 'package:flutter/widgets.dart';
 import 'package:visitors_book/db/databse.dart';
-import 'package:visitors_book/sql/notes.dart';
+import 'package:visitors_book/db/notes.dart';
 import 'package:flutter/material.dart';
 import 'package:visitors_book/Styles/constants.dart';
 class ReuseableCard extends StatelessWidget {
   const ReuseableCard({
     Key? key,
-    required this.books,
+    //required this.books,
   }) : super(key: key);
 
-  final List<Book> books;
+  //final List<Book> books;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
         padding: const EdgeInsets.all(8),
-        itemCount: books.length,
+        //itemCount: books.length,
         itemBuilder: (BuildContext context, int index) {
-          final book = books[index];
+          //final book = books[index];
 
           return Container(
             height: 50,
@@ -32,7 +32,7 @@ class ReuseableCard extends StatelessWidget {
                             children: <Widget>[
 
                               Expanded(
-                                child: Card(book: book),
+                                child: Card(),
                               ),
 
 
@@ -57,10 +57,10 @@ class ReuseableCard extends StatelessWidget {
 class Card extends StatelessWidget {
   const Card({
     Key? key,
-    required this.book,
+   // required this.book,
   }) : super(key: key);
 
-  final Book book;
+  //final Book book;
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +117,8 @@ class Card extends StatelessWidget {
                     SizedBox(height: 7.0,
                       width: 7.0,),
 
-                    Text(book.address,
+                    Text(//book.address,
+                       'hi',
                         style: kFontStyle
                             .copyWith(
                             color: Colors
@@ -128,7 +129,7 @@ class Card extends StatelessWidget {
                     SizedBox(height: 7.0,
                       width: 7.0,),
                     Center(
-                      child: Text( book.comments
+                      child: Text( 'comments'
                         ,
                         style: kFontStyle
                             .copyWith(
@@ -139,7 +140,7 @@ class Card extends StatelessWidget {
                     ),
                     SizedBox(height: 10.0,
                       width: 10.0,),
-                    Text(book.name,
+                    Text('name',
 
                       style: kFontStyle
                           .copyWith(

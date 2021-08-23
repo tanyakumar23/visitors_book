@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:visitors_book/db/databse.dart';
-import 'package:visitors_book/sql/notes.dart';
+import 'package:visitors_book/db/notes.dart';
 import 'dart:async';
 import 'package:visitors_book/Widgets/ReuseableCard.dart';
 import 'package:visitors_book/db/databaseHelper.dart';

@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:visitors_book/Screens/RegistrationScreen.dart';
 import 'package:visitors_book/db/databse.dart';
-import 'package:visitors_book/sql/notes.dart';
+import 'package:visitors_book/db/notes.dart';
 import 'package:visitors_book/db/databaseHelper.dart';
 
 
